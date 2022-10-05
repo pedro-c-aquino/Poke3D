@@ -33,11 +33,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Create a session configuration
         let configuration = ARImageTrackingConfiguration()
         
-        if let imageToTrack = ARReferenceImage.referenceImages(inGroupNamed: "Pokemon Cards", bundle: Bundle.main) {
+        if let imagesToTrack = ARReferenceImage.referenceImages(inGroupNamed: "Pokemon Cards", bundle: Bundle.main) {
             
-            configuration.trackingImages = imageToTrack
+            configuration.trackingImages = imagesToTrack
             
-            configuration.maximumNumberOfTrackedImages = 1
+            configuration.maximumNumberOfTrackedImages = 2
             
             print("Images Successfully Added")
         }
@@ -73,13 +73,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             node.addChildNode(planeNode)
             
-            if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
+            if imageAnchor.referenceImage.name == "eevee-card" {
                 
-                if  let pokeNode = pokeScene.rootNode.childNodes.first {
+                if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
                     
-                    pokeNode.eulerAngles.x = .pi/2
+                    if  let pokeNode = pokeScene.rootNode.childNodes.first {
+                        
+                        pokeNode.eulerAngles.x = .pi/2
+                        
+                        planeNode.addChildNode(pokeNode)
+                    }
+                }
+            }
+            
+            if imageAnchor.referenceImage.name == "oddish-card" {
+                
+                if let pokeScene = SCNScene(named: "art.scnassets/oddish.scn") {
                     
-                    planeNode.addChildNode(pokeNode)
+                    if  let pokeNode = pokeScene.rootNode.childNodes.first {
+                        
+                        pokeNode.eulerAngles.x = .pi/2
+                        
+                        planeNode.addChildNode(pokeNode)
+                    }
                 }
             }
         }
